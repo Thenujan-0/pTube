@@ -102,17 +102,17 @@ class HomeController extends Controller
                 continue;
             }
             
-            createThumbnail($movie);
+            $this->createThumbnail($movie,$thumbnail);
         }
         
         return view("home",["videos"=>$videos]);
     }
 
-    private function createThumbnail($videoFilePath){
+    private function createThumbnail($videoFilePath,$thumbnail){
         $thumbnailFrameSec = 10;
 
         $ffmpeg = FFMpeg::fromDisk('local');
-        $video = $ffmpeg->open($movvideoFilePathie);
+        $video = $ffmpeg->open($videoFilePath);
         $frame = $video->frame(FFMpeg\Coordinate\TimeCode::fromSeconds($thumbnailFrameSec));
         $frame->export()->toDisk("local")->save($thumbnail);
     }
